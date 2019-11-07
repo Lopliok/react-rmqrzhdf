@@ -4,84 +4,17 @@ import Hello from './Hello';
 import './style.css';
 import Carousel from 'nuka-carousel'
 import ScrollLock, { TouchScrollable } from 'react-scrolllock';
-
+import  { useTouchLockScroll } from './useTouchLockScroll'
 
 
 const App = () => {
 
-  const ref = React.useRef()
-
-  let firstX = null
-
-  const [state, setState] = useState(false)
-
-const [firstClientX, setFirstClientX] = useState();
-  const [firstClientY, setFirstClientY] = useState();
-  const [clientX, setClientX] = useState();
-
-    const touchStart = e => {
-      console.log('touchStart')
-           firstX = e.touches[0].clientX
-
-     setFirstClientX(e.touches[0].clientX);
-      setFirstClientY(e.touches[0].clientY);
-
-           console.log(e.touches[0].clientX, firstClientX, firstX)
-
-    };
-
-    const preventTouch = e => {
- 
-      const minValue = 5; // threshold
-
-      setClientX(e.touches[0].clientX - firstClientX);
-
-      const difference = e.touches[0].clientX - firstX
-
-      // Vertical scrolling does not work when you start swiping horizontally.
-      if (Math.abs(difference) > minValue) {
-        e.preventDefault();
-        e.stopPropagation();
-        e.returnValue = false;
-        return false;
-      }
-    };
-
-
-
-
-    const bindEvents = (e) => {
-    console.log('bind')
-    e.preventDefault();
-    e.stopPropagation();
-    touchStart(e)
-   
-   // window.addEventListener('touchstart', touchStart);
-     window.addEventListener('touchmove', preventTouch, true);
-  //  window.addEventListener('touchforcechange', preventTouch, { passive: false });
-      //d  window.addEventListener('touchend', unbindEvents);
- 
-    }
-  
-const unbindEvents = () => {
-  console.log('unbind')
-
- // setFirstClientX(undefined);
- // setFirstClientY(undefined);
-
-    //  window.removeEventListener('touchstart', touchStart);
-     /*   window.removeEventListener('touchmove', preventTouch, {
-        passive: false,
-      }); */
-  //    window.removeEventListener('touchforcechange', preventTouch, { passive: false });  
-    //  window.removeEventListener('touchend', unbindEvents); 
-}
+  const [dragOn, dragOff] = useTouchLockScroll();
 
 
     return (
       <div>
-      fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda
-        <p>
+     <p>
           Start editing to see some magic happen :)
         </p>
         <div>
@@ -89,8 +22,8 @@ const unbindEvents = () => {
         <div>
                
 
-          <div onTouchStart={bindEvents} onTouchMove={preventTouch, true} onTouchEnd={unbindEvents}  >
-        <Carousel swiping={true} onDragStart >
+          <div onTouchMove={dragOff} onTouchEnd={dragOff}  >
+        <Carousel swiping={true} onDragStart={dragOn} >
              <img style={{ height: 400, width: '100%'}}  src="https://placehold.it/1000x400/ffffff/c0392b/&text=slide1"/>
               <img style={{ height: 400, width: '100%'}}  src="https://placehold.it/1000x400/ffffff/c0392b/&text=slide2"/>
              <img style={{ height: 400, width: '100%'}} src="https://placehold.it/1000x400/ffffff/c0392b/&text=slide3"/>
@@ -101,7 +34,7 @@ const unbindEvents = () => {
         </div></div>
         </div> 
 
-           fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda
+           fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds jfůadjslfůjasdlůfj ůlasdjf ůlkjadsůlfj dsůlfj lůasddjflů jsda   fsdfsdfsdfasf safd adsf asdfsda fdsa fdsafasdfds 
     
       </div>
     );
