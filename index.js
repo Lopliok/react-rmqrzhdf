@@ -9,7 +9,40 @@ import  { useTouchLockScroll } from './useTouchLockScroll'
 
 const App = () => {
 
-  const [dragOn, dragOff] = useTouchLockScroll();
+ let [active, setActive] = useState(false)
+
+
+  const dragOn = () => {
+    active = true
+    console.log('active', active)
+   // setActive(true)
+  }
+
+  const dragOff = () => {
+  // setActive(false)
+    active = false
+  }
+
+  const preventScroll = (e) => {
+    console.log(active)
+    if (active) {
+      e.preventDefault();
+    }
+  }
+
+  useEffect(() => {
+
+    window.addEventListener('touchmove', preventScroll, {
+      passive: false
+    })
+
+    return () => {
+       window.removeEventListener('touchmove', preventScroll, {
+      passive: false
+    })
+    }
+
+  },[active])
 
 
     return (
@@ -22,7 +55,7 @@ const App = () => {
         <div>
                
 
-          <div onTouchMove={dragOff} onTouchEnd={dragOff}  >
+          <div onTouchCancel={dragOff} onTouchEnd={dragOff}  >
         <Carousel swiping={true} onDragStart={dragOn} >
              <img style={{ height: 400, width: '100%'}}  src="https://placehold.it/1000x400/ffffff/c0392b/&text=slide1"/>
               <img style={{ height: 400, width: '100%'}}  src="https://placehold.it/1000x400/ffffff/c0392b/&text=slide2"/>

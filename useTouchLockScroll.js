@@ -4,16 +4,17 @@ let active = false
 
 export const useTouchLockScroll = () => {
 
-  
+  let [active, setActive] = useState(false)
+
 
   const dragOn = () => {
     active = true
     console.log('active', active)
-   // setDragging(true)
+   // setActive(true)
   }
 
   const dragOff = () => {
-   // setDragging(false)
+  // setActive(false)
     active = false
   }
 
