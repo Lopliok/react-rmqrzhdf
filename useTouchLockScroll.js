@@ -5,14 +5,32 @@ export const useTouchLockScroll = () => {
 
 let active = false
 
-const [swipe, setSwipe] = useState(false)
+const [swipe, setSwipe] = useState(true)
+
+const [clientY, setClienY] = useState()
+const [clientYAct, setClienYAct] = useState()
 
   const dragOn = () => {
     active = true
   }
 
   const dragOff = () => {
-    active = false
+    active = false  
+  }
+
+  const afterSlide = () => {
+setClienY(undefined)
+    setClienYAct(undefined)
+  }
+
+  const onTouchStart = (e) => {
+    console.log('ac', active)
+    !active && setClienY(e.touches[0].clientY)
+  }
+
+  const onTouchMove = (e) => {
+     !active && setClienYAct(e.touches[0].clientY)
+        console.log(clientYAct - clientY > 15)
   }
 
   const preventScroll = (e) => {
@@ -20,6 +38,8 @@ const [swipe, setSwipe] = useState(false)
       e.preventDefault();
     }
   }
+
+  const isDirection
 
   useEffect(() => {
 
@@ -36,5 +56,5 @@ const [swipe, setSwipe] = useState(false)
 
   },[])
 
- return [dragOn, dragOff, () => setSwipe(true), () => setSwipe(false),]
+ return [dragOn, dragOff, onTouchStart, onTouchMove, afterSlide, clientYAct &&  clientYAct - clientY > 10 || active]
 }
