@@ -1,31 +1,51 @@
 import { useEffect, useState } from 'react'
 
-let active = false
 
 export const useTouchLockScroll = () => {
 
-  let [active, setActive] = useState(false)
+let active = false
 
+const [allSwipe, setAllSwipe] = useState(true)
+let swipe = true
 
   const dragOn = () => {
     active = true
-    console.log('active', active)
-   // setActive(true)
   }
 
   const dragOff = () => {
-  // setActive(false)
     active = false
   }
 
   const preventScroll = (e) => {
-    console.log(active)
     if (active) {
       e.preventDefault();
     }
   }
 
+  const preventSlide = (e) => {
+
+    if (!active) {
+      setAllSwipe(false)
+   /*  swipe = !swipe
+    console.log('sw', swipe, active) */
+
+    }
+  }
+
+   const allow = (e) => {
+
+    if (!active) {
+      setAllSwipe(true)
+    swipe = !swipe
+    console.log('sw', swipe, active)
+
+    }
+  }
+
   useEffect(() => {
+
+    window.addEventListener('touchstart', preventSlide)
+    window.addEventListener('touchend', allow)
 
     window.addEventListener('touchmove', preventScroll, {
       passive: false
@@ -39,5 +59,5 @@ export const useTouchLockScroll = () => {
 
   },[])
 
- return [dragOn, dragOff]
+ return [dragOn, dragOff, allSwipe]
 }
