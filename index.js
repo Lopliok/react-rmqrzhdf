@@ -9,10 +9,14 @@ import  { useTouchLockScroll } from './useTouchLockScroll'
 
 const App = () => {
 
- const [dragOn, dragOff, swipe] = useTouchLockScroll();
+
+
+ const [dragOn, dragOff] = useTouchLockScroll();
+
 
     return (
-      <div>
+      <div >
+      <button  >fsdf</button>
      <p>
           Start editing to see some magic happen :)
         </p>
@@ -22,7 +26,7 @@ const App = () => {
                
 
           <div onTouchCancel={dragOff} onTouchEnd={dragOff}  >
-        <Carousel swiping={swipe} onDragStart={dragOn} >
+        <Carousel onDragStart={dragOn} >
              <img style={{ height: 400, width: '100%'}}  src="https://placehold.it/1000x400/ffffff/c0392b/&text=slide1"/>
               <img style={{ height: 400, width: '100%'}}  src="https://placehold.it/1000x400/ffffff/c0392b/&text=slide2"/>
              <img style={{ height: 400, width: '100%'}} src="https://placehold.it/1000x400/ffffff/c0392b/&text=slide3"/>
